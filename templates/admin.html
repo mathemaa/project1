@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <main class="about-section">
+    <div class="container">
+      
+  <div class="section-content">
+        <h2> Projekt- und Userverwaltung </h2>
+        <br/>
+        <br/>
+        Neuen User hinzufügen:
+        <br/>
+        <br/>
+
+        <form action="/new_user" method="POST">
+            Username: <input type="text" name="username" placeholder="name">
+             <br/>
+            Password: <input type="text" name="password" placeholder="passwort">
+             <br/>
+            Rolle: <select name="role">
+                <option value='1'>admin</option>
+                <option value='2'>user</option>
+                <option value='3'>superuser</option>
+              <select>
+             <br/>
+             <input type="submit" class="button button1" value="Hinzufügen">
+        </form>
+
+        <br>
+        <br>
+
+        <p> Neues Projekt hinzufügen: </p>
+        <form action="/new_project" method="POST">
+            Projektname: <input type="text" name="username">
+             <br/>
+            CSV hochladen: <input type="text" name="password">
+             <br/>
+             <input type="submit" class="button button1" value="Hinzufügen">
+        </form>
+      <br>
+      <br>
+        <a href="/" class="button button1" >Go Back</a>
+  </div>
+      
+      <br>
+      <style>
+.button {
+    background-color: #008CBA; /* Blue */
+    border: none;
+    color: white;
+    padding: 9px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+.button1:hover {
+    background-color: #008CBA;
+    color: white;
+}
+</style>
+      
+    </div>
+  </main>
+{% endblock %}
+<!-- -->
