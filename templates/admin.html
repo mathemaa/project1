@@ -13,6 +13,13 @@
         <br/>
 
         <form action="/new_user" method="POST">
+
+            Projekt: <select name="projectname">
+                          {% for projects in datas %}
+                          <option>{{ projects.projectname }}</option>
+                          {% endfor %}
+                     <select>
+             <br/>
             Username: <input type="text" name="username" placeholder="name">
              <br/>
             Password: <input type="text" name="password" placeholder="passwort">
@@ -29,30 +36,79 @@
         <br>
         <br>
 
-        <p> Neues Projekt hinzufügen: </p>
-        <form action="/new_project" method="POST">
-            Projektname: <input type="text" name="username">
-             <br/>
-            CSV hochladen: <input type="text" name="password">
-             <br/>
-             <input type="submit" class="button button1" value="Hinzufügen">
-        </form>
-      <br>
-      <br>
+        Neues Projekt hinzufügen:
+        <br>
+        <br>
+          <form action = "/upload" method = "POST" enctype = "multipart/form-data">
+              Projektname: <input type="text" name="name">
+              <p>CSV hochladen: </p>
+              <input type = "file" name = "the_file" />
+              <input type = "submit" class="button button1" value="Hinzufügen">
+          </form>
+
+        <br>
+        <br>
         <a href="/" class="button button1" >Go Back</a>
   </div>
+
+
+
+  <h2>Aktuelle Projekte</h2>
+
+        <table>
+          <tr>
+            <th>Projektname</th>
+            <th>Filename</th>
+        <br>
+          </tr>
+           {% for projects in datas %}
+          <tr>
+            <td>{{ projects.projectname }}</td>
+            <td>{{ projects.filename }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+
+  <br>
+  <h2>Alle Räume </h2>
+  <a href="/refresh" class="button button1" >Aktualisieren</a>
       
+      <table>
+          <tr>
+            <th>UserId</th>
+            <th>Floor</th>
+            <th>Room</th>
+            <th>Progres</th>
+        <br>
+          </tr>
+           {% for rooms in all_rooms %}
+          <tr>
+            <td>{{ rooms.userid }}</td>
+            <td>{{ rooms.floor }}</td>
+            <td>{{ rooms.room }}</td>
+            <td>{{ rooms.status }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+
       <br>
       <style>
+
+     </div>
+
+     Hello World
+
+
+
 .button {
     background-color: #008CBA; /* Blue */
     border: none;
     color: white;
-    padding: 9px 8px;
+    padding: 5px 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 12px;
     margin: 4px 2px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
