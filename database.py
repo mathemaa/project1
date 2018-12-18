@@ -51,7 +51,7 @@ class rooms(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   userid = db.Column(db.String(100))
   floor = db.Column(db.String(100))
-  room = db.Column(db.String(100), unique=True)
+  room = db.Column(db.String(100))
   status = db.Column(db.String(100))
 
   def __init__(self, userid, floor, room, status):
@@ -61,21 +61,7 @@ class rooms(db.Model):
     self.status = status
 
 
-#cur.execute("select * from test")
-with open('Duplex_A_20110907_rooms.csv', 'r') as f:
-    reader = csv.reader(f, delimiter=';')
-    for row in reader:
-      #print(row[1],row[2])
-      cur.execute(
-            " INSERT INTO test (userid, floor, room) VALUES ('3', %s, %s)",
-            (row[1],row[2])
-      )
-conn.commit()
 
-#query= " INSERT INTO test (floor, room) VALUES (%s, %s);"
-#data= ('1.OG','1.10')
-#cur.execute(query,data)
-#cur.execute("select * from test")
  
 
 conn.close()
