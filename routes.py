@@ -1,12 +1,14 @@
 # Module werden importiert 
-from flask import Flask, request, redirect, render_template
-from database import db, users, projects, rooms, test, cur 
+from flask import Flask, request, redirect, render_template, session
+from database import db, users, projects, rooms, test, cur
 from werkzeug.utils import secure_filename
 import psycopg2, csv
+import os
 
 
 
 app = Flask(__name__)
+app.secret_key = os.urandom(12)
 
 
 #connecting to postgres
@@ -14,15 +16,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost/project1'
 db.init_app(app)
 
 #ROUTING
-@app.route("/")
+@app.route("/loginpage")
 def session_start():
   return render_template("session.html")
 
-#@app.route("/login")
-#def login(username, password):
-#  user = users.query.filter_by(username=username).first()
-#  passw = zustand.query.filter_by(id=id).first()
-#  return render_template('editroom.html', datas=x, room=room)
+@app.route("/grafik")
+def svg_grafik():
+  return render_template("grafik.html")
+
 
 @app.route("/login", methods=['POST'])
 def login():
@@ -41,36 +42,48 @@ def login():
     cur.execute( "SELECT id FROM users WHERE username = %s AND password = %s ",
       (x,y)
     )
-    userid = cur.fetchone()
-
+    userid = str(cur.fetchone()[0])
 
     cur.execute("SELECT role FROM users Where id = %s ",
-      (userid,)
+      (userid)
       )
-    role = cur.fetchone()
 
-    if role == '2' : 
-    #return str(role)
-      return redirect ('/user')
-    else:
-      return ('no permisson')
+    role = cur.fetchone()[0]
 
+    session['userid'] = userid
 
+    if role is '1':
+      return redirect('/admin')
 
-
-
-
+    if role is '2': 
+      return redirect('/user')
+    
+    if role is '3':
+      return redirect('/superuser')
 
 @app.route('/admin')
 def admin_session():
   all_projects = projects.query.all()
-  all_rooms = rooms.query.all()
-  return render_template('admin.html',  datas=all_projects, room_data=all_rooms)
+  all_users = users.query.all()
+  return render_template('admin.html',  datas=all_projects, users_data=all_users)
 
 @app.route('/user')
 def user_session():
-  datas = rooms.query.all()
+  if 'userid' not in session:
+    #TODO give a flash message
+    return redirect('/loginpage')
+  
+  #user stored in the session or abort
+  userid = str(session['userid'])
+
+  datas = rooms.query.filter(rooms.userid == userid).all()
   return render_template('user.html', datas=datas )
+
+@app.route("/final/edit/<int:id>")
+def edit(id):
+  x = zustand.query.all()
+  room = zustand.query.filter_by(id=id).first()
+  return render_template('editroom.html', datas=x, room=room)
 
 @app.route('/superuser')
 def superuser_session():

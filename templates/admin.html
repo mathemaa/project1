@@ -13,16 +13,15 @@
         <br/>
 
         <form action="/new_user" method="POST">
-
             Projekt: <select name="projectname">
                           {% for projects in datas %}
                           <option>{{ projects.projectname }}</option>
                           {% endfor %}
                      <select>
              <br/>
-            Username: <input type="text" name="username" placeholder="name">
+            Username: <input type="text" name="username" placeholder="username">
              <br/>
-            Password: <input type="text" name="password" placeholder="passwort">
+            Password: <input type="text" name="password" placeholder="password">
              <br/>
             Rolle: <select name="role">
                 <option value='1'>admin</option>
@@ -48,7 +47,7 @@
 
         <br>
         <br>
-        <a href="/" class="button button1" >Go Back</a>
+        <a href="/loginpage" class="button button1" >Go Back</a>
   </div>
 
 
@@ -71,61 +70,25 @@
 
   <br>
   <h2>Alle Räume </h2>
-  <a href="/refresh" class="button button1" >Aktualisieren</a>
       
       <table>
           <tr>
-            <th>UserId</th>
-            <th>Floor</th>
-            <th>Room</th>
-            <th>Progres</th>
+            <th>Username</th>
+            <th>Passwort</th>
+            <th>Rolle</th>
+            <th>Projekt</th>
         <br>
           </tr>
-           {% for rooms in all_rooms %}
+           {% for users in users_data %}
           <tr>
-            <td>{{ rooms.userid }}</td>
-            <td>{{ rooms.floor }}</td>
-            <td>{{ rooms.room }}</td>
-            <td>{{ rooms.status }}</td>
+            <td>{{ users.username }}</td>
+            <td>{{ users.password }}</td>
+            <td>{{ users.role }}</td>
+            <td>{{ users.projectname }}</td>
           </tr>
           {% endfor %}
         </table>
 
-      <br>
-      <style>
-
-     </div>
-
-     Hello World
-
-
-
-.button {
-    background-color: #008CBA; /* Blue */
-    border: none;
-    color: white;
-    padding: 5px 5px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-
-.button1 {
-    background-color: white; 
-    color: black; 
-    border: 2px solid #008CBA;
-}
-.button1:hover {
-    background-color: #008CBA;
-    color: white;
-}
-</style>
-      
     </div>
   </main>
 {% endblock %}

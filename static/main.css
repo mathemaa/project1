@@ -314,11 +314,11 @@ header {
     background-color: #008CBA; /* Blue */
     border: none;
     color: white;
-    padding: 5px 5px;
+    padding: 10px 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 5px;
+    font-size: 14px;
     margin: 4px 2px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
